@@ -1,0 +1,24 @@
+.\" Manpage for gitfind.
+.\" Contact dev@glezseoane.com to any requirement.
+.TH man 1 "19 Dec 2018" "0.1" "gitfind man page"
+.SH NAME
+gitfind \- find git repositories
+.SH SYNOPSIS
+\fBgitfind\fR [\fIpath\fR] [\fB\-e\fR \fIutil\fR] [\fB\-v\fR]
+.SH DESCRIPTION
+\fBgitfind\fR is an utility that finds all the git repositories included in the folder you want. It can list them or apply another specific utility.
+.SH OPTIONS
+.IP "\fIpath\fR"
+First, should be declare the path where \fBgitfind\fR have to search. Per omission path is the \fBHOME\fR directory.
+.IP "\fB-e\fR \fIutil\fR"
+Second, preceded by a \fB-e\fR flag, it can be optionally declared the utility to execute in each repository. If this option is not used, the directories will be only listed.
+.IP "\fB-v\fR"
+Verbose mode is enabled.
+.SH EXIT STATUS
+Exits 0 on success, 1 on illegal parameters error, 2 on invalid directory error, 3 on not installed or reachable utility error and 4 on not applicable utility to directory error.
+.SH SEE ALSO
+\fBgit\fR(1), \fBfind\fR(1).
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Borja Gonzalez Seoane <dev@glezseoane.com> is the author of \fBgitfind\fR.
