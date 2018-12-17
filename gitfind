@@ -1,0 +1,122 @@
+#!/bin/bash
+
+<<DOC
+#####################################################################
+# Project    : gitfind                                              #
+# Program    : gitfind                                              #
+# Author     : Borja González Seoane (GlezSeoane)                   #
+# Maintainer : Borja González Seoane (GlezSeoane)                   #
+# Email      : dev@glezseoane.com                                   #
+# Date       : 17/12/2018                                           #
+# Purpose    : gitfind is an utility that finds all the git 		#
+#				repositories included in the folder you want. It 	#
+#				can list them or apply another specific utility. 	#
+#                                                                   #
+# Version    : 0.1-alpha                                            #
+# License    : View project license                                 #
+#                                                                   #
+# Input      : [path] [-e util] [-v]                                #
+#                                                                   #
+# Output     : Exits 0 on success, 1 on illegal parameters error,   #
+#                2 on invalid directory error, 3 on not installed   #
+#                or reachable utility error and 4 on not aplicable  #
+#                utility in directory error.                        #
+#                                                                   #
+#                 View manpage for more information                 #
+#####################################################################
+DOC
+
+
+DIR=$HOME
+#UTIL=null
+#VERBOSITY=null
+
+
+function paramError() {
+	echo >&2 "Error: Illegal parameters passed. Aborting..."
+}
+
+
+# First, configured space with parameters passed doing basic checks
+if [[ "$#" > "4" ]]; then
+	paramError
+elif [[ "$#" == "4" ]]; then
+	if [[ "$2" == "-e" ]]; then
+		if [[ "$4" == "-v" ]]; then
+			DIR=$1
+			UTIL=$3
+			VERBOSITY=true
+		fi
+	fi
+elif [[ "$#" == "3" ]]; then
+	if [[ "$2" == "-e" ]]; then
+		DIR=$1
+		UTIL=$3
+		VERBOSITY=false
+	elif [[ "$1" == "-e" ]]; then
+		if [[ "$3" == "-v" ]]; then
+			UTIL=$2
+			VERBOSITY=true
+		fi
+	fi
+elif [[ "$#" == "2" ]]; then
+	if [[ "$1" == "-e" ]]; then
+		UTIL=$2
+		VERBOSITY=false
+	fi
+elif [[ "$#" == "1" ]]; then
+	DIR=$1
+	VERBOSITY=false
+else
+	VERBOSITY=false
+fi
+
+# Check if parameters were matched into an if branch
+if [[ -z "$VERBOSITY" ]]; then
+	paramError
+	exit 1
+fi
+
+# Check if DIR passed points to a valid directory
+if [[ ! -d $DIR ]]; then
+	echo >&2 "Error: $DIR is not a valid directory. Aborting...";
+	exit 2
+fi
+
+# Check if the UTIL passed is reachable
+if [[ -n "$UTIL" ]]; then
+	command -v $UTIL >/dev/null 2>&1 || {
+		echo >&2 "Error: $UTIL is not installed. Aborting...";
+		exit 3;
+	}
+fi
+
+
+# The only list option is equivalent to run pwd in DIR
+if [[ -z "$UTIL" ]]; then
+	UTIL=pwd
+fi
+
+
+# Run with the established configuration
+find $DIR -name .git -type d -prune | while read d; do
+	cd $d/..
+	if [[ "$VERBOSITY" = true ]]; then
+		echo "*** Executing $UTIL in $d"
+	fi
+
+	$UTIL
+	if [ "$?" != "0" ]; then
+		echo >&2 "Error: impossible execute $UTIL in $d. Aborting..."
+		exit 4
+	fi
+
+	if [[ "$VERBOSITY" = true ]]; then
+		echo -e "\n"
+	fi
+	cd $OLDPWD
+done
+
+
+exit 0 # All okey: finish
+
