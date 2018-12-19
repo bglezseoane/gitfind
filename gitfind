@@ -2,120 +2,195 @@
 
 <<DOC
 #####################################################################
-# Project    : gitfind                                              #
-# Program    : gitfind                                              #
-# Author     : Borja González Seoane (GlezSeoane)                   #
-# Maintainer : Borja González Seoane (GlezSeoane)                   #
-# Email      : dev@glezseoane.com                                   #
-# Date       : 17/12/2018                                           #
-# Purpose    : gitfind is an utility that finds all the git 		#
-#				repositories included in the folder you want. It 	#
-#				can list them or apply another specific utility. 	#
+# @Project: gitfind                                                 #
+# @Author: Borja González Seoane (GlezSeoane)                       #
+# @Email: dev@glezseoane.com                                        #
+# @Date: 19/12/2018                                                 #
+# Purpose: gitfind is a utility that finds the git repositories     #
+#               included in the directory that you want. It can     #
+#               list or apply another specific utility to them. It  #
+#               also provides the option to filter the search to    #
+#               capture a specific repository. See the manual page  #
+#               for more information. It also provides the option   #
+#               to filter the search to capture a specific          #
+#               repository.                                         #
 #                                                                   #
-# Version    : 0.1-alpha                                            #
-# License    : View project license                                 #
-#                                                                   #
-# Input      : [path] [-e util] [-v]                                #
-#                                                                   #
-# Output     : Exits 0 on success, 1 on illegal parameters error,   #
-#                2 on invalid directory error, 3 on not installed   #
-#                or reachable utility error and 4 on not aplicable  #
-#                utility in directory error.                        #
+# Version: 0.1-alpha                                                #
 #                                                                   #
 #                 View manpage for more information                 #
 #####################################################################
 DOC
 
+#************************* gitfind program **************************
 
-DIR=$HOME
+DIR=$PWD
 #UTIL=null
+#PATTERN=null
+#VAGUE_FILTER_MODE=null
 #VERBOSITY=null
 
+# Output stye
+RESTORE="\033[0m"
+RED="\033[01;31m"
 
-function paramError() {
-	echo >&2 "Error: Illegal parameters passed. Aborting..."
+
+function paramError {
+	echo -en >&2 "${RED}Error: Illegal parameters passed. Aborting...${RESTORE}\n"
 }
 
 
-# First, configured space with parameters passed doing basic checks
-if [[ "$#" > "4" ]]; then
-	paramError
-elif [[ "$#" == "4" ]]; then
-	if [[ "$2" == "-e" ]]; then
-		if [[ "$4" == "-v" ]]; then
-			DIR=$1
-			UTIL=$3
-			VERBOSITY=true
-		fi
-	fi
-elif [[ "$#" == "3" ]]; then
-	if [[ "$2" == "-e" ]]; then
-		DIR=$1
-		UTIL=$3
-		VERBOSITY=false
-	elif [[ "$1" == "-e" ]]; then
-		if [[ "$3" == "-v" ]]; then
-			UTIL=$2
-			VERBOSITY=true
-		fi
-	fi
-elif [[ "$#" == "2" ]]; then
-	if [[ "$1" == "-e" ]]; then
-		UTIL=$2
-		VERBOSITY=false
-	fi
-elif [[ "$#" == "1" ]]; then
-	DIR=$1
-	VERBOSITY=false
-else
-	VERBOSITY=false
-fi
 
-# Check if parameters were matched into an if branch
-if [[ -z "$VERBOSITY" ]]; then
+#************* Reception of input parameters *************#
+
+# Handle all parameters passed
+# Input: [-p path] [-ex util] [-f pattern] [-v]
+if [[ $# > "7" ]]; then
 	paramError
 	exit 1
+else
+	for (( i=1; i<=$#; i+=2)); do
+		case ${!i} in
+			"-p")
+				j=$((i+1))
+				DIR=${!j}
+				;;
+			"-ex")
+				j=$((i+1))
+				UTIL=${!j}
+				;;
+			"-f")
+				j=$((i+1))
+				PATTERN=${!j}
+				;;
+			"-F")
+				j=$((i+1))
+				PATTERN=${!j}
+				VAGUE_FILTER_MODE=true
+				;;
+			"-v")
+				VERBOSITY=true
+				i=$i-1
+				;;
+			*)
+				paramError
+				exit 1
+				;;
+		esac
+	done
 fi
+
+
+# Check if there have been no crosses due to a wrong parameter pass
+if [[ $DIR == "-ex" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
+	if [[ $UTIL == "-p" || $UTIL == "-f" || $UTIL == "-F" || $UTIL == "-v" ]]; then
+		if [[ $PATTERN == "-p" || $PATTERN == "-ex" || $PATTERN == "-v" ]]; then
+			paramError
+			exit 1
+		fi
+	fi
+fi
+
+
+# Purgue DIR specification
+DIR="${DIR//\/\///}"
+
+
+
+#************* Check input parameters *************#
 
 # Check if DIR passed points to a valid directory
 if [[ ! -d $DIR ]]; then
-	echo >&2 "Error: $DIR is not a valid directory. Aborting...";
+	echo -en >&2 "${RED}Error: $DIR is not a valid directory. Aborting...${RESTORE}\n";
 	exit 2
 fi
 
+
 # Check if the UTIL passed is reachable
-if [[ -n "$UTIL" ]]; then
+if [[ -n $UTIL ]]; then
 	command -v $UTIL >/dev/null 2>&1 || {
-		echo >&2 "Error: $UTIL is not installed. Aborting...";
-		exit 3;
+		echo -en >&2 "${RED}Error: $UTIL is not installed. Aborting...${RESTORE}\n";
+		exit 3
 	}
 fi
 
 
+
+#************* Configure main loop *************#
+
 # The only list option is equivalent to run pwd in DIR
-if [[ -z "$UTIL" ]]; then
+if [[ -z $UTIL ]]; then
 	UTIL=pwd
 fi
 
 
-# Run with the established configuration
+# Before run the main, some conditionals are resolved for efficiency
+ 
+# Head message in verbose mode or none in normal mode
+if [[ -n $VERBOSITY ]]; then
+	function head_verb_msg {
+		echo "*** Executing $UTIL in $1"
+	}
+else
+	function head_verb_msg {
+		:
+	}
+fi
+
+# Footer message in verbose mode or none in normal mode
+if [[ -n $VERBOSITY ]]; then
+	function footer_verb_msg {
+		echo -ex "\n"
+	}
+else
+	function footer_verb_msg {
+		:
+	}
+fi
+
+# Main loop heart: apply $UTIL to all or only to pattern matched repos
+if [[ -z $PATTERN ]]; then
+	function loop_heart {
+		$UTIL
+	}
+else
+	if [[ -z $VAGUE_FILTER_MODE ]]; then
+		function loop_heart {
+			if [[ $1 == *"$PATTERN" ]]; then
+				$UTIL
+			fi
+		}
+	else
+		function loop_heart {
+			if [[ $1 == *"$PATTERN"* ]]; then
+				$UTIL
+			fi
+		}
+	fi
+fi
+
+
+
+#************* MAIN *************#
+
+# Run main with the coupled configuration
 find $DIR -name .git -type d -prune | while read d; do
 	cd $d/..
-	if [[ "$VERBOSITY" = true ]]; then
-		echo "*** Executing $UTIL in $d"
-	fi
+	d=${d%/*}
+	
+	head_verb_msg $d
+	
+	loop_heart $d
 
-	$UTIL
 	if [ "$?" != "0" ]; then
-		echo >&2 "Error: impossible execute $UTIL in $d. Aborting..."
+		echo -en >&2 "${RED}Error: impossible execute $UTIL in $d. Aborting...${RESTORE}\n"
 		exit 4
 	fi
 
-	if [[ "$VERBOSITY" = true ]]; then
-		echo -e "\n"
-	fi
+	footer_verb_msg
+	
 	cd $OLDPWD
 done
+
 
 
 exit 0 # All okey: finish
