@@ -1,6 +1,6 @@
 # gitfind use cases
 
-gitfind is a simple utility that finds all the git repositories included in the folder you want or your local device. It can list or apply them the specific utility. It also provides the option to filter the search to catch a specific repository.
+gitfind is a simple utility that finds all the git repositories included in the folder you want or your local device. It can list or apply them the specific utility. It also provides the option to filter the search to capture a specific repository.
 
 A transversal interest of the tool is allow a cross communication with other \*nix utilities.
 
@@ -9,6 +9,8 @@ A transversal interest of the tool is allow a cross communication with other \*n
 - Decomposition based on the scope:
 	- All-repositories on `~` [A].
 	- All-repositories on a specified path [P].
+	- Filter the search [F] looking only the repository name.
+	- Filter the search [V] looking all the path chain (vague filter).
 
 - Decomposition based on the goal:
 	- Only list repositories [1].
@@ -16,13 +18,24 @@ A transversal interest of the tool is allow a cross communication with other \*n
 	- Apply a function verbose [3].
 
 
-## Summary of command line orders
+## Summary of command line possibilities
 
-- `gitfind`: only list all local repositories (i.e.: reps. under `$HOME`) [1A].
-- `gitfind <path>`: only list reps. in specified path [1P].
-- `gitfind -e <util>`: apply (exec) specified utility to all local reps. [2A]
-- `gitfind <path> -e <util>`: apply specified utility on specified path reps. [2P]
-- `gitfind -e <util> -v`: apply specified utility to all local reps (verbose output). [3A]
-- `gitfind <path> -e <util> -v`: apply specified utility on specified path reps (verbose output). [3P]
-
+- `gitfind`: only list all current working directory repositories (i.e.: reps. under `$PWD`) [1A].
+- `gitfind -f <pattern>`: only list all current working directory repositories (i.e.: reps. under `$PWD`) matched with the pattern [1AF].
+- `gitfind -F <pattern>`: only list all current working directory repositories matched with the vague vague pattern [1AV].
+- `gitfind -p <path>`: only list reps. in specified path [1P].
+- `gitfind -p <path> -f <pattern>`: only list reps. in specified path matched with the pattern [1PF].
+- `gitfind -p <path> -F <pattern>`: only list reps. in specified path matched with the vague pattern [1PV].
+- `gitfind -ex <util>`: apply (exec) specified utility to all current working directory reps. [2A].
+- `gitfind -ex <util> -f <pattern>`: apply (exec) specified utility to all current working directory reps. matched with the pattern  [2AF].
+- `gitfind -ex <util> -F <pattern>`: apply (exec) specified utility to all current working directory reps. matched with the pvague attern  [2AV].
+- `gitfind -p <path> -ex <util>`: apply specified utility on specified path reps. [2P].
+- `gitfind -p <path> -ex <util> -f <pattern>`: apply specified utility on specified path reps. matched with the pattern [2PF].
+- `gitfind -p <path> -ex <util> -F <pattern>`: apply specified utility on specified path reps. matched with the vague pattern [2PV].
+- `gitfind -ex <util> -v`: apply specified utility to all current working directory reps (verbose output) [3A].
+- `gitfind -ex <util> -f <pattern> -v`: apply specified utility to all current working directory reps (verbose output) matched with the pattern [3AF].
+- `gitfind -ex <util> -F <pattern> -v`: apply specified utility to all current working directory reps (verbose output) matched with the vague pattern [3AV].
+- `gitfind -p <path> -ex <util> -v`: apply specified utility on specified path reps (verbose output) [3P].
+- `gitfind -p <path> -ex <util> -f <pattern> -v `: apply specified utility on specified path reps (verbose output) matched with the pattern [3PF].
+- `gitfind -p <path> -ex <util> -F <pattern> -v `: apply specified utility on specified path reps (verbose output) matched with the vague pattern [3PV].
 
