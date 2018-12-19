@@ -5,7 +5,7 @@
 # @Project: gitfind                                                 #
 # @Author: Borja González Seoane (GlezSeoane)                       #
 # @Email: dev@glezseoane.com                                        #
-# @Date: 17/12/2018                                                 #
+# @Date: 19/12/2018                                                 #
 # Purpose: gitfind is a utility that finds the git repositories     #
 #               included in the directory that you want. It can     #
 #               list or apply another specific utility to them. It  #
@@ -15,7 +15,7 @@
 #               to filter the search to capture a specific          #
 #               repository.                                         #
 #                                                                   #
-# Version: 0.1-alpha                                                #
+# Version: 1.0                                                      #
 #                                                                   #
 #                 View manpage for more information                 #
 #####################################################################
