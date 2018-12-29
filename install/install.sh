@@ -17,7 +17,7 @@
 #           machine.                                                #
 # Output: 0 on success and 1 on error.                              #
 #                                                                   #
-# Version: 1.1                                                      #
+# Version: 1.2                                                      #
 #                                                                   #
 #                 Read manpage for more information                 #
 #####################################################################
