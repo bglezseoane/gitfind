@@ -1,6 +1,6 @@
 .\" Manpage for gitfind.
 .\" Contact dev@glezseoane.com to any requirement.
-.TH man 1 "29 Dec 2018" "1.0" "gitfind man page"
+.TH man 1 "29 Dec 2018" "1.1" "gitfind man page"
 .SH NAME
 gitfind \- find local git repositories
 .SH SYNOPSIS
