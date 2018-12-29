@@ -33,13 +33,13 @@ RED="\033[01;31m"
 # Discrimine machine type
 function itsMac {
 	{
-		uname -a | grep Mac && return 0
+		uname -a | grep Mac
 	} &> /dev/null
 }
 
 function itsLinux {
 	{
-		uname -a | grep Mac && return 0
+		uname -a | grep Mac
 	} &> /dev/null	
 }
 
