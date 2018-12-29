@@ -3,7 +3,7 @@
 <<DOC
 #####################################################################
 # @Project: gitfind                                                 #
-# Purpose: gitfind is an utility that finds the git repositories    #
+# Purpose: gitfind is a utility that finds the git repositories     #
 #           included in the directory you want. You can only list   #
 #           or apply another specific utility to them. It also      #
 #           provides the option to filter the search to capture a   #
