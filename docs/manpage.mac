@@ -1,12 +1,12 @@
 .\" Manpage for gitfind.
 .\" Contact dev@glezseoane.com to any requirement.
-.TH man 1 "19 Dec 2018" "0.1" "gitfind man page"
+.TH man 1 "29 Dec 2018" "1.0" "gitfind man page"
 .SH NAME
 gitfind \- find local git repositories
 .SH SYNOPSIS
 \fBgitfind\fR [\fB\-p\fR \fIpath\fR] [\fB\-ex\fR \fIutil\fR] [\fB\-f\fR|\fB\-F\fR \fIpattern\fR] [\fB\-v\fR]
 .SH DESCRIPTION
-\fBgitfind\fR is an utility that finds all the git repositories included into a specific folder. It can list them or apply another specific utility. It also provides the option to filter the search to capture specific repositories.
+\fBgitfind\fR is an utility that finds the git repositories included in the directory you want. You can only list or apply another specific utility to them. It also provides the option to filter the search to capture a specific repository.
 .SH OPTIONS
 .IP "\fB\-p\fR \fIpath\fR"
 Preceded by a \fB-p\fR flag must be declared the path where \fBgitfind\fR have to search. Per omission path is the current working directory.
