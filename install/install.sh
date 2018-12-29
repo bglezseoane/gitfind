@@ -3,43 +3,43 @@
 <<DOC
 #####################################################################
 # @Project: gitfind                                                 #
+# Purpose: gitfind is an utility that finds the git repositories    #
+#           included in the directory you want. You can only list   #
+#           or apply another specific utility to them. It also      #
+#           provides the option to filter the search to capture a   #
+#           specific repository.                                    #
+#                                                                   #
+# @Program: uninstall.sh                                            #
 # @Author: Borja González Seoane (GlezSeoane)                       #
 # @Email: dev@glezseoane.com                                        #
-# @Date: 19/12/2018                                                 #
-# Purpose: gitfind is a utility that finds the git repositories     #
-#               included in the directory that you want. It can     #
-#               list or apply another specific utility to them. It  #
-#               also provides the option to filter the search to    #
-#               capture a specific repository. See the manual page  #
-#               for more information. It also provides the option   #
-#               to filter the search to capture a specific          #
-#               repository.                                         #
+# @Date: 29/12/2018                                                 #
+# Program purpose: This script install gitfind files for your       #
+#           machine.                                                #
+# Output: 0 on success and 1 on error.                              #
 #                                                                   #
 # Version: 1.0                                                      #
 #                                                                   #
-#                 View manpage for more information                 #
+#                 Read manpage for more information                 #
 #####################################################################
 DOC
 
-#**************************** installer *****************************
-# Simple script to install gitfind in *nix machine
 
 # Output stye
 RESTORE="\033[0m"
-GREEN="\033[01;32\nm"
+GREEN="\033[01;32m"
 RED="\033[01;31m"
 
 
 # Discrimine machine type
 function itsMac {
 	{
-		uname -a | grep Mac && return 0
+		uname -a | grep Mac
 	} &> /dev/null
 }
 
 function itsLinux {
 	{
-		uname -a | grep Mac && return 0 
+		uname -a | grep Linux
 	} &> /dev/null
 }
 
