@@ -1,6 +1,6 @@
 # gitfind use cases
 
-gitfind is an utility that finds the git repositories included in the directory you want. You can only list or apply another specific utility to them. It also provides the option to filter the search to capture a specific repository.
+gitfind is a utility that finds the git repositories included in the directory you want. You can only list or apply another specific utility to them. It also provides the option to filter the search to capture a specific repository.
 
 A transversal interest of the tool is allow a cross communication with other \*nix utilities.
 
