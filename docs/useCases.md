@@ -1,8 +1,10 @@
 # gitfind use cases
 
-gitfind is a simple utility that finds all the git repositories included in the folder you want or your local device. It can list or apply them the specific utility. It also provides the option to filter the search to capture a specific repository.
+gitfind is an utility that finds the git repositories included in the directory you want. You can only list or apply another specific utility to them. It also provides the option to filter the search to capture a specific repository.
 
 A transversal interest of the tool is allow a cross communication with other \*nix utilities.
+
+
 
 ## Use cases of gitfind
 
@@ -16,6 +18,7 @@ A transversal interest of the tool is allow a cross communication with other \*n
 	- Only list repositories [1].
 	- Apply a function [2].
 	- Apply a function verbose [3].
+
 
 
 ## Summary of command line possibilities
@@ -38,4 +41,6 @@ A transversal interest of the tool is allow a cross communication with other \*n
 - `gitfind -p <path> -ex <util> -v`: apply specified utility on specified path reps (verbose output) [3P].
 - `gitfind -p <path> -ex <util> -f <pattern> -v `: apply specified utility on specified path reps (verbose output) matched with the pattern [3PF].
 - `gitfind -p <path> -ex <util> -F <pattern> -v `: apply specified utility on specified path reps (verbose output) matched with the vague pattern [3PV].
+
+**Note**: flags do not have to be in order.
 

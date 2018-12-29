@@ -3,25 +3,28 @@
 <<DOC
 #####################################################################
 # @Project: gitfind                                                 #
+# Purpose: gitfind is an utility that finds the git repositories    #
+#           included in the directory you want. You can only list   #
+#           or apply another specific utility to them. It also      #
+#           provides the option to filter the search to capture a   #
+#           specific repository.                                    #
+#                                                                   #
+# @Program: uninstall.sh                                            #
 # @Author: Borja González Seoane (GlezSeoane)                       #
 # @Email: dev@glezseoane.com                                        #
-# @Date: 19/12/2018                                                 #
-# Purpose: gitfind is a utility that finds the git repositories     #
-#               included in the directory that you want. It can     #
-#               list or apply another specific utility to them. It  #
-#               also provides the option to filter the search to    #
-#               capture a specific repository. See the manual page  #
-#               for more information. It also provides the option   #
-#               to filter the search to capture a specific          #
-#               repository.                                         #
+# @Date: 29/12/2018                                                 #
+# Program purpose: Main script of the project.                      #
+# Output: 0 on success, 1 on illegal parameters error,              #
+#           2 on invalid directory error, 3 on not installed or     #
+#           reachable utility error and 4 on not applicable utility #
+#           to directory error.                                     #
 #                                                                   #
-# Version: 1.0                                                      #
+# Version: 1.1                                                      #
 #                                                                   #
-#                 View manpage for more information                 #
+#                 Read manpage for more information                 #
 #####################################################################
 DOC
 
-#************************* gitfind program **************************
 
 DIR=$PWD
 #UTIL=null
@@ -139,7 +142,7 @@ fi
 # Footer message in verbose mode or none in normal mode
 if [[ -n $VERBOSITY ]]; then
 	function footer_verb_msg {
-		echo -ex "\n"
+		echo -en "\n"
 	}
 else
 	function footer_verb_msg {
@@ -181,7 +184,7 @@ find $DIR -name .git -type d -prune | while read d; do
 	
 	loop_heart $d
 
-	if [ "$?" != "0" ]; then
+	if [[ "$?" != "0" ]]; then
 		echo -en >&2 "${RED}Error: impossible execute $UTIL in $d. Aborting...${RESTORE}\n"
 		exit 4
 	fi
