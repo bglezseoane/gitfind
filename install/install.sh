@@ -39,7 +39,7 @@ function itsMac {
 
 function itsLinux {
 	{
-		uname -a | grep Mac
+		uname -a | grep Linux
 	} &> /dev/null
 }
 
