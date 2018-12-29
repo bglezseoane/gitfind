@@ -142,7 +142,7 @@ fi
 # Footer message in verbose mode or none in normal mode
 if [[ -n $VERBOSITY ]]; then
 	function footer_verb_msg {
-		echo -ex "\n"
+		echo -en "\n"
 	}
 else
 	function footer_verb_msg {
