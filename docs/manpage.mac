@@ -1,17 +1,17 @@
 .\" Manpage for gitfind.
 .\" Contact dev@glezseoane.com to any requirement.
-.TH man 1 "29 Dec 2018" "1.2" "gitfind man page"
+.TH man 1 "25 Jan 2019" "1.3" "gitfind man page"
 .SH NAME
 gitfind \- find local git repositories
 .SH SYNOPSIS
-\fBgitfind\fR [\fB\-p\fR \fIpath\fR] [\fB\-ex\fR \fIutil\fR] [\fB\-f\fR|\fB\-F\fR \fIpattern\fR] [\fB\-v\fR]
+\fBgitfind\fR [\fB\-p\fR \fIpath\fR] [\fB\-x\fR \fIutil\fR] [\fB\-f\fR|\fB\-F\fR \fIpattern\fR] [\fB\-v\fR]
 .SH DESCRIPTION
 \fBgitfind\fR is a utility that finds the git repositories included in the directory you want. You can only list or apply another specific utility to them. It also provides the option to filter the search to capture a specific repository.
 .SH OPTIONS
 .IP "\fB\-p\fR \fIpath\fR"
 Preceded by a \fB-p\fR flag must be declared the path where \fBgitfind\fR have to search. Per omission path is the current working directory.
-.IP "\fB-ex\fR \fIutil\fR"
-Preceded by a \fB-ex\fR flag can be optionally declared the utility to execute in each repository. If this option is not used, the directories will be only listed. It is possible to pass flags for the utility or launch complex commands. To do this, the command must be enclosed between quotes (e.g.: \fI...-ex "touch foo && touch bar"...\fR).
+.IP "\fB-x\fR \fIutil\fR"
+Preceded by a \fB-x\fR flag can be optionally declared the utility to execute in each repository. If this option is not used, the directories will be only listed. It is possible to pass flags for the utility or launch complex commands. To do this, the command must be enclosed between quotes (e.g.: \fI...-x "touch foo && touch bar"...\fR).
 .IP "\fB-f\fR \fIpattern\fR"
 Preceded by a \fB-f\fR flag can be optionally declared a pattern to filter the search. This pattern is referred to the repository name. This option is compatible with the list and the utility applied options, but it is recommended to check the filtered list before applying a utility against it. Not confuse with \fB-F\fR option, it is a vaguer filter that looks all the path.
 .IP "\fB-F\fR \fIpattern\fR"
