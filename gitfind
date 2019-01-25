@@ -59,6 +59,10 @@ else
 				j=$((i+1))
 				UTIL=${!j}
 				;;
+			"-ex") # Deprecated flag of previous releases (now is -x)
+				j=$((i+1))
+				UTIL=${!j}
+				;;
 			"-f")
 				j=$((i+1))
 				PATTERN=${!j}
@@ -82,9 +86,9 @@ fi
 
 
 # Check if there have been no crosses due to a wrong parameter pass
-if [[ $DIR == "-x" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
+if [[ $DIR == "-x" || $DIR == "-ex" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
 	if [[ $UTIL == "-p" || $UTIL == "-f" || $UTIL == "-F" || $UTIL == "-v" ]]; then
-		if [[ $PATTERN == "-p" || $PATTERN == "-x" || $PATTERN == "-v" ]]; then
+		if [[ $PATTERN == "-p" || $PATTERN == "-x" || $PATTERN == "-ex" || $PATTERN == "-v" ]]; then
 			paramError
 			exit 1
 		fi
