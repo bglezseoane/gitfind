@@ -1,6 +1,5 @@
 #!/bin/bash
 
-<<DOC
 #####################################################################
 # @Project: gitfind                                                 #
 # Purpose: gitfind is a utility that finds the git repositories     #
@@ -21,7 +20,6 @@
 #                                                                   #
 #                 Read manpage for more information                 #
 #####################################################################
-DOC
 
 
 # Output stye
