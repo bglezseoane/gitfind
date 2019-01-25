@@ -11,12 +11,12 @@
 # @Program: uninstall.sh                                            #
 # @Author: Borja González Seoane (GlezSeoane)                       #
 # @Email: dev@glezseoane.com                                        #
-# @Date: 29/12/2018                                                 #
+# @Date: 25/1/2019                  n                               #
 # Program purpose: This script uninstall gitfind files for your     #
 #           machine.                                                #
 # Output: 0 on success and 1 on error.                              #
 #                                                                   #
-# Version: 1.2                                                      #
+# Version: 1.3                                                      #
 #                                                                   #
 #                 Read manpage for more information                 #
 #####################################################################
