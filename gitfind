@@ -1,6 +1,5 @@
 #!/bin/bash
 
-<<DOC
 #####################################################################
 # @Project: gitfind                                                 #
 # Purpose: gitfind is a utility that finds the git repositories     #
@@ -23,7 +22,6 @@
 #                                                                   #
 #                 Read manpage for more information                 #
 #####################################################################
-DOC
 
 
 DIR=$PWD
@@ -47,7 +45,7 @@ function paramError {
 
 # Handle all parameters passed
 # Input: [-p path] [-ex util] [-f pattern] [-v]
-if [[ $# > "7" ]]; then
+if [[ $# -gt "7" ]]; then
 	paramError
 	exit 1
 else
@@ -122,7 +120,7 @@ fi
 
 # The only list option is equivalent to run pwd in DIR
 if [[ -z $UTIL ]]; then
-	UTIL=pwd
+	UTIL="pwd"
 fi
 
 
@@ -177,12 +175,12 @@ fi
 
 # Run main with the coupled configuration
 find $DIR -name .git -type d -prune | while read d; do
-	cd $d/..
+	cd "$d"/.. || exit 2
 	d=${d%/*}
 	
-	head_verb_msg $d
+	head_verb_msg "$d"
 	
-	loop_heart $d
+	loop_heart "$d"
 
 	if [[ "$?" != "0" ]]; then
 		echo -en >&2 "${RED}Error: impossible execute $UTIL in $d. Aborting...${RESTORE}\n"
@@ -191,7 +189,7 @@ find $DIR -name .git -type d -prune | while read d; do
 
 	footer_verb_msg
 	
-	cd $OLDPWD
+	cd "$OLDPWD" || exit 2
 done
 
 
