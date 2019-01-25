@@ -44,7 +44,7 @@ function paramError {
 #************* Reception of input parameters *************#
 
 # Handle all parameters passed
-# Input: [-p path] [-ex util] [-f pattern] [-v]
+# Input: [-p path] [-x util] [-f pattern] [-v]
 if [[ $# -gt "7" ]]; then
 	paramError
 	exit 1
@@ -55,7 +55,7 @@ else
 				j=$((i+1))
 				DIR=${!j}
 				;;
-			"-ex")
+			"-x")
 				j=$((i+1))
 				UTIL=${!j}
 				;;
@@ -82,9 +82,9 @@ fi
 
 
 # Check if there have been no crosses due to a wrong parameter pass
-if [[ $DIR == "-ex" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
+if [[ $DIR == "-x" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
 	if [[ $UTIL == "-p" || $UTIL == "-f" || $UTIL == "-F" || $UTIL == "-v" ]]; then
-		if [[ $PATTERN == "-p" || $PATTERN == "-ex" || $PATTERN == "-v" ]]; then
+		if [[ $PATTERN == "-p" || $PATTERN == "-x" || $PATTERN == "-v" ]]; then
 			paramError
 			exit 1
 		fi
