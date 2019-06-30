@@ -10,7 +10,17 @@ To learn more about the use and the behaviour of gitfind, read the manual page.
 
 ## Installation
 
-### To install
+### Using Homebrew
+
+To install this app via Homebrew, use:
+
+```sh
+brew install glezseoane/homebrew-tap/gitfind
+```
+
+### Manual installation
+
+#### To install
 
 To install gitfind, first clone this repository, and then execute:
 
@@ -25,8 +35,7 @@ You may need to run the above command with superuser privileges, depending on th
 
 `sudo cd install && ./install.sh`.
 
-
-### To uninstall
+#### To uninstall
 
 To uninstall gitfind, execute:
 
