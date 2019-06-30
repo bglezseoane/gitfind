@@ -43,7 +43,7 @@ function itsLinux {
 
 
 cd ..
-itsMac && cp ./gitfind /usr/local/bin/ && echo -en "${GREEN}OK: installed binaries${RESTORE}\n" && cp ./docs/manpage.mac /usr/local/share/man/man1/gitfind.1 && echo -en "${GREEN}OK: installed manpages${RESTORE}\n" && exit 0
+itsMac && cp ./gitfind /usr/local/bin/ && echo -en "${GREEN}OK: installed binaries${RESTORE}\n" && cp ./docs/manpage.1 /usr/local/share/man/man1/gitfind.1 && echo -en "${GREEN}OK: installed manpages${RESTORE}\n" && exit 0
 itsLinux && cp ./gitfind /usr/local/bin/ && echo -en "${GREEN}OK: installed binaries${RESTORE}\n" && cp ./docs/manpage.linux /usr/share/man/man1/gitfind.1.gz && echo -en "${GREEN}OK: installed manpages${RESTORE}\n" && exit 0
 echo "${RED}Imposible to autoinstall gitfind. Copy the files manually by yourself.${RESTORE}\n" && exit 1
 
