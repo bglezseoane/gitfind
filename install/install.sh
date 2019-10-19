@@ -9,9 +9,9 @@
 #           specific repository.                                    #
 #                                                                   #
 # @Program: uninstall.sh                                            #
-# @Author: Borja González Seoane (GlezSeoane)                       #
-# @Email: dev@glezseoane.com                                        #
-# @Date: 25/1/2019     m                                            #
+# @Author: Borja González Seoane                                    #
+# @Email: garaje@glezseoane.es                                      #
+# @Date: 19/10/2019                                                 #
 # Program purpose: This script install gitfind files for your       #
 #           machine.                                                #
 # Output: 0 on success and 1 on error.                              #
