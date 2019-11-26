@@ -2,23 +2,22 @@
 
 #####################################################################
 # @Project: gitfind                                                 #
-# Purpose: 	An utility that finds the git repositories              #
+# Purpose:  An utility that finds the git repositories              #
 #           included in the directory you want. You can only list   #
 #           or apply another specific utility to them. It also      #
 #           provides the option to filter the search to capture a   #
 #           specific repository.                                    #
 #                                                                   #
-# @Program: uninstall.sh                                            #
+# @Program: gitfind                                                 #
 # @Author: Borja González Seoane                                    #
 # @Email: garaje@glezseoane.es                                      #
-# @Date: 19/10/2019                                                 #
+# @Date: 26/11/2019                                                 #
 # Program purpose: Main script of the project.                      #
 # Output: 0 on success, 1 on illegal parameters error,              #
-#           2 on invalid directory error, 3 on not installed or     #
-#           reachable utility error and 4 on not applicable utility #
-#           to directory error.                                     #
+#           2 on invalid directory error, 3 on not applicable util  #
+#           error.                                                  #
 #                                                                   #
-# Version: 1.5                                                      #
+# Version: 2.0                                                      #
 #                                                                   #
 #                 Read manpage for more information                 #
 #####################################################################
