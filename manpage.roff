@@ -1,0 +1,29 @@
+.\" Manpage for Gitfind
+.\" Contact garaje@glezseoane.es to any requirement
+.TH man 1 "26 Nov 2019" "1.5" "gitfind man page"
+.SH NAME
+gitfind \- find local git repositories
+.SH SYNOPSIS
+\fBgitfind\fR [\fB\-p\fR \fIpath\fR] [\fB\-f\fR|\fB\-F\fR \fIpattern\fR] [\fB\-x\fR \fIsubcommand\fR]
+.SH DESCRIPTION
+\fBgitfind\fR is an utility that finds the git repositories included in the directory you want. You can only list or apply another specific command to them. It also provides the option to filter the search to capture specific repositories.
+.SH OPTIONS
+.IP "\fB\-p\fR \fIpath\fR"
+Preceded by a \fB-p\fR flag must be declared the path where \fBgitfind\fR have to search. Per omission path is the current working directory.
+.IP "\fB-f\fR \fIpattern\fR"
+Optionally you can use a pattern filter. You have to, preceded by a \fB-f\fR flag, declare a pattern to filter the search. This pattern is referred to the repository name. This option is compatible with the list and the command applied options, but it is recommended to check the filtered list before applying a command against it. Do not confuse with \fB-F\fR option, it is a vaguer filter that looks all the path.
+.IP "\fB-F\fR \fIpattern\fR"
+Optionally you can use a pattern filter. You have to, preceded by a \fB-F\fR flag, declare a pattern to filter the search. This pattern is referred to all the repository path. This option is compatible with the list and the command applied options, but it is recommended to check the filtered list before applying a command against it. Do not confuse with \fB-f\fR option, it is a preciser filter that only looks repository name.
+.IP "\fB-x\fR \fIsubcommand\fR"
+Optionally you can use a subcommand that will be executed in every repositories, but do \fBalways at the last of the order!\fR Preceded by a \fB-x\fR flag, you declare the command to execute in each repository. If this option is not used, the directories will be only listed. It is possible to pass flags for the utility or launch complex commands (more than a word). To do this, the command must be enclosed between quotes (e.g.: \fI...-x "touch foo && touch bar"...\fR). This option have to be the last because Gitcher catched all the stuff on the right of the flag and treats it as the subcommand.
+.SH WARNING
+The \fB-x\fR option must to be the last one if using.
+If you use subcommands with more than a word you must use quotes to close them.
+.SH EXIT STATUS
+Exits 0 on success, 1 on illegal parameters error and 3 on not applicable utility error.
+.SH DIFFERENCES WITH VERSION 1
+Verbose mode is definitely disabled and some bugs with subcommands dependent of the working directory are fixed.
+.SH SEE ALSO
+\fBgit\fR(1), \fBfind\fR(1).
+.SH AUTHOR
+Borja Gonzalez Seoane <garaje@glezseoane.es> is the author of \fBgitfind\fR.
