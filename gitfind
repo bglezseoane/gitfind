@@ -28,7 +28,6 @@ DIR=$PWD
 #UTIL=null
 #PATTERN=null
 #VAGUE_FILTER_MODE=null
-#VERBOSITY=null
 
 # Output stye
 RESTORE="\033[0m"
@@ -44,64 +43,41 @@ function paramError {
 #************* Reception of input parameters *************#
 
 # Handle all parameters passed
-# Input: [-p path] [-x util] [-f pattern] [-v]
-if [[ $# -gt "7" ]]; then
-	paramError
-	exit 1
-else
-	for (( i=1; i<=$#; i+=2)); do
-		case ${!i} in
-			"-p")
-				j=$((i+1))
-				DIR=${!j}
-				;;
-			"-x")
-				j=$((i+1))
-				UTIL=${!j}
-				;;
-			"-ex") # Deprecated flag of previous releases (now is -x)
-				j=$((i+1))
-				UTIL=${!j}
-				;;
-			"-f")
-				j=$((i+1))
-				PATTERN=${!j}
-				;;
-			"-F")
-				j=$((i+1))
-				PATTERN=${!j}
-				VAGUE_FILTER_MODE=true
-				;;
-			"-v")
-				VERBOSITY=true
-				i=$i-1
-				;;
-			*)
-				paramError
-				exit 1
-				;;
-		esac
-	done
-fi
-
-
-# Check if there have been no crosses due to a wrong parameter pass
-if [[ $DIR == "-x" || $DIR == "-ex" || $DIR == "-f" || $DIR == "-F" || $DIR == "-v" ]]; then
-	if [[ $UTIL == "-p" || $UTIL == "-f" || $UTIL == "-F" || $UTIL == "-v" ]]; then
-		if [[ $PATTERN == "-p" || $PATTERN == "-x" || $PATTERN == "-ex" || $PATTERN == "-v" ]]; then
+# Input: [-p path] [-f|-F pattern] [-x util]
+for (( i=1; i<=$#; i+=2)); do
+	case ${!i} in
+		"-p")
+			j=$((i+1))
+			DIR=${!j}
+			;;
+		"-f")
+			j=$((i+1))
+			PATTERN=${!j}
+			;;
+		"-F")
+			j=$((i+1))
+			PATTERN=${!j}
+			VAGUE_FILTER_MODE=true
+			;;
+		"-x")
+			j=$((i+1))
+			UTIL=${@: j}
+			break
+			;;
+		*)
 			paramError
 			exit 1
-		fi
-	fi
-fi
+			;;
+	esac
+done
 
-
-# Purgue DIR specification
-DIR="${DIR//\/\///}"
 
 
 
 #************* Check input parameters *************#
+
+# Purgue DIR specification
+DIR="${DIR//\/\///}"
 
 # Check if DIR passed points to a valid directory
 if [[ ! -d $DIR ]]; then
@@ -110,68 +86,11 @@ if [[ ! -d $DIR ]]; then
 fi
 
 
-# Check if the UTIL passed is reachable
-if [[ -n $UTIL ]]; then
-	command -v $UTIL >/dev/null 2>&1 || {
-		echo -en >&2 "${RED}Error: $UTIL is not installed. Aborting...${RESTORE}\n";
-		exit 3
-	}
-fi
-
-
-
-#************* Configure main loop *************#
-
 # The only list option is equivalent to run pwd in DIR
 if [[ -z $UTIL ]]; then
 	UTIL="pwd"
 fi
 
-
-# Before run the main, some conditionals are resolved for efficiency
- 
-# Head message in verbose mode or none in normal mode
-if [[ -n $VERBOSITY ]]; then
-	function head_verb_msg {
-		echo "*** Executing $UTIL in $1"
-	}
-else
-	function head_verb_msg {
-		:
-	}
-fi
-
-# Footer message in verbose mode or none in normal mode
-if [[ -n $VERBOSITY ]]; then
-	function footer_verb_msg {
-		echo -en "\n"
-	}
-else
-	function footer_verb_msg {
-		:
-	}
-fi
-
-# Main loop heart: apply $UTIL to all or only to pattern matched repos
-if [[ -z $PATTERN ]]; then
-	function loop_heart {
-		$UTIL
-	}
-else
-	if [[ -z $VAGUE_FILTER_MODE ]]; then
-		function loop_heart {
-			if [[ $1 == *"$PATTERN" ]]; then
-				$UTIL
-			fi
-		}
-	else
-		function loop_heart {
-			if [[ $1 == *"$PATTERN"* ]]; then
-				$UTIL
-			fi
-		}
-	fi
-fi
 
 
 
@@ -179,24 +98,27 @@ fi
 
 # Run main with the coupled configuration
 find $DIR -name .git -type d -prune | while read d; do
-	cd "$d"/.. || exit 2
-	d=${d%/*}
-	
-	head_verb_msg "$d"
-	
-	loop_heart "$d"
-
-	if [[ "$?" != "0" ]]; then
-		echo -en >&2 "${RED}Error: impossible execute $UTIL in $d. Aborting...${RESTORE}\n"
-		exit 4
+	if [[ -z $PATTERN ]]; then
+		cd "$d/.." && (eval $UTIL)
+	else
+		if [[ -z $VAGUE_FILTER_MODE ]]; then
+			if [[ $1 == *"$PATTERN" ]]; then
+				cd "$d/.." && (eval $UTIL)
+			fi
+		else
+			if [[ $1 == *"$PATTERN"* ]]; then
+				cd "$d/.." && (eval $UTIL)
+			fi
+		fi
 	fi
 
-	footer_verb_msg
-	
-	cd "$OLDPWD" || exit 2
+	# Abort on error
+	if [[ "$?" != "0" ]]; then
+		echo -en >&2 "${RED}Error: impossible execute $UTIL in $d. Aborting...${RESTORE}\n"
+		exit 3
+	fi
 done
 
 
 
 exit 0 # All okey: finish
-
